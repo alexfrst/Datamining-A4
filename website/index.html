@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Bicycle sharing system</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <--!Leaflet, map provider-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+
+    <--Semantic ui CDN-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+    <--Bootstrap icons for ... icons :)-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="ui top huge fixed menu inverted">
+
+    <div class="item">
+        <i class="bi bi-bicycle"></i>
+        <div>Bicycle system explorer</div>
+    </div>
+
+        <div class="right menu">
+            <a class="item" href="#home"><i class="bi bi-house-fill"></i></a>
+            <a class="item" href="#search"><i class="bi bi-search"></i></a>
+            <a class="item" href="#team"><i class="bi bi-person-fill"></i></a>
+            <a class="item" href="https://github.com/alexfrst/Datamining-A4"><i class="bi bi-github"></i></a>
+        </div>
+</div>
+
+
+<div class="ui container content">
+    <h1 class="ui dividing header" id="home">Home</h1>
+    <div>
+        <img class="ui huge rounded centered image " src="bicycle.jpg"><div class="centering">Riding has never been that easy</div>
+    </div>
+    <div class="ui form content">
+        <h1 class="ui dividing header">Explore</h1>
+        <h3 class="ui dividing header">Desired Network</h3>
+        <div class="fields">
+            <div class="field">
+                <button class="ui network button" onclick="selector('Paris')"><i class="bi bi-geo-alt"></i> Paris <i class="fr flag"></i></button>
+            </div>
+            <div class="field">
+                <button class="ui network button" onclick="selector('Lyon')"><i class="bi bi-geo-alt"></i> Lyon <i class="fr flag"></i></button>
+            </div>
+            <div class="field">
+                <button class="ui network button " onclick="selector('Rennes')"><i class="bi bi-geo-alt"></i> Rennes <i class="fr flag"></i></button>
+            </div>
+            <div class="field">
+                <button class="ui blue network button" onclick="selector('All')"><i class="bi bi-geo-alt"></i> All </button>
+            </div>
+        </div>
+        <h3 class="ui dividing header" id="search">Station location</h3>
+        <div class="fields">
+            <select multiple="" class="ui dropdown search" id="cities">
+                <option value="ezr">Paris</option>
+                <option value="ze">Courbevoie</option>
+                <option value="e">Asnière</option>
+                <option value="cr">Aubervilliers</option>
+                <option value="eu">Neuilly-sur-seine</option>
+                <option value="y">Montrouge</option>
+            </select>
+        </div>
+
+
+
+        <h3>What are you interested in ?</h3>
+        <div class="ui segment">
+            <div class="ui two column very relaxed grid">
+                <div class="column">
+                    <h2 class="ui dividing header">Return a bike</h2>
+                    <div class="fields">
+                        <div class="field">
+                            <h5>Required number of docks</h5>
+                            <div class="five wide field">
+                                <input type="text" id = "ndock">
+                            </div>
+
+                            <h5>Required number of available docks</h5>
+                            <div class="five wide field">
+                                <input type="text" id="adocks">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui teal button" id="return" onclick="returnBike()">Return my bike</button>
+                </div>
+
+
+
+
+
+                <div class="column">
+                    <h2 class="ui dividing header">Rent a bike </h2>
+                    <h4>Type of bikes :</h4>
+                    <div class="fields">
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" tabindex="0" class="hidden" id="electric">
+                                <label><i class="bi electric bi-lightning-charge-fill"></i> Electric</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" tabindex="0" class="hidden" id="mechanical">
+                                <label><i class="mechanical bi bi-bicycle"></i> Mechanical</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <h5>Minimum number of bikes :</h5>
+                        <div class="five wide field">
+                            <input type="text" id="abikes">
+                        </div>
+                    </div>
+                    <button class="ui olive button" id="rent" onclick="rentBike()">Rent my bike</button>
+                </div>
+            </div>
+            <div class="ui vertical divider">
+                or
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="map"></div>
+    <h1 class="ui dividing header section" id="team">Our team</h1>
+    <h3>We're dedicated to simplify commuting in major cities</h3>
+    <div class="ui link centered cards">
+        <div class="card">
+            <div class="image">
+                <img src="https://media-exp1.licdn.com/dms/image/C4D03AQHVze68yyJ8Hw/profile-displayphoto-shrink_200_200/0/1603476401462?e=1622073600&v=beta&t=ggOV1bPWa8l16MU5nXXpMiOaOUBukh6DI1JS5whcomY">
+            </div>
+            <div class="content">
+                <div class="header">FORESTIER Alexandre</div>
+                <div class="meta">
+                    <a>Team member</a>
+                </div>
+            </div>
+            <div class="extra content">
+              <span class="right floated">
+                Joined in 2017
+              </span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image">
+                <img src="https://media-exp1.licdn.com/dms/image/C4D03AQFaJGZh3gL_9g/profile-displayphoto-shrink_800_800/0/1608039759801?e=1622073600&v=beta&t=0FsnbxRRl5xBOQaHcCQRPrlykzFrvDtCq_gqAQj76p4">
+            </div>
+            <div class="content">
+                <div class="header">GATINOIS Marion</div>
+                <div class="meta">
+                    <a>Team member</a>
+                </div>
+            </div>
+            <div class="extra content">
+              <span class="right floated">
+                Joined in 2017
+              </span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="image">
+                <img src="https://media-exp1.licdn.com/dms/image/C4D03AQFi2i17Ut2Uag/profile-displayphoto-shrink_200_200/0/1613559499105?e=1622073600&v=beta&t=SNBLYNmjFyE-Os21-kJaN6bg_JpIlAbT9LwACinwTdE">
+            </div>
+            <div class="content">
+                <div class="header">PICOT Julie</div>
+                <div class="meta">
+                    <span class="date">Team member</span>
+                </div>
+            </div>
+            <div class="extra content">
+              <span class="right floated">
+                Joined in 2017
+              </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript" src="script.js"></script>
+</html>

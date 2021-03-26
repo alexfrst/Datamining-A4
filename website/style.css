@@ -1,0 +1,46 @@
+.item i{
+    display: block;
+    height: 100%;
+}
+
+.content{
+    padding-top: 60px;
+}
+
+.electric {
+    color: yellow;
+}
+
+.mechanical{
+    color: dodgerblue;
+}
+
+#map{
+    display: block;
+    height: 80vh;
+    width: 90%;
+    margin: 10px 5%;
+    z-index: 1;
+}
+
+.correction{
+    position: relative;
+    bottom: 0px;
+}
+
+.section{
+    padding-top: 40px;
+}
+
+.centering{
+    position: absolute;
+    top: 42%; left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-family: sans-serif;
+    font-size: 40px;
+}
+
+.menu{
+    z-index: 10;
+}
