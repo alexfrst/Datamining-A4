@@ -74,16 +74,13 @@ const coreQuery = () => {
 }
 
 let initCache = async () => {
-    const values = []
     for(const city of ["Paris", "Lyon", "Rennes"]){
         const temp = await query(`PREFIX ex: <http://example.org/> prefix ns1:   <http://dbpedia.org/ontology/> SELECT distinct ?city WHERE {  ?id ns1:network ?net . filter(?net = "${city}") .  ?id ns1:city ?city . }`)
         cache[city] = ""
         for(elem of temp.results.bindings){
             cache[city] += `<option value="${elem.city.value}">${elem.city.value}</option>`
-            values.push(elem.city.value)
         }
     }
-    console.log(values)
     cache.all = cache["Paris"]+cache["Lyon"]+cache["Rennes"]
     document.getElementById("cities").innerHTML = cache["all"]
 }
@@ -125,7 +122,7 @@ const rentBike= async () => {
     querytext+=coreQuery()
     let quantity = 0
     if(Number.isInteger(parseInt(document.getElementById("abikes").value))){
-        quantity = Math.max(document.getElementById("abikes").value,1)
+        quantity = Math.max(document.getElementById("abikes").value,0)
     }
     if($('.ui.checkbox').checkbox("is checked")[0] && !$('.ui.checkbox').checkbox("is checked")[1]){
         querytext += `filter (?ebikes >= ${quantity}) .`

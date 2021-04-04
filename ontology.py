@@ -30,7 +30,6 @@ class ontology:
 
 
     def loadCity(self,name):
-
         data = City(name).stations
         for station in data:
             stationId = URIRef("http://example.org/station/"+station.id)
